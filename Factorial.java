@@ -6,64 +6,75 @@ import java.io.InputStreamReader;
 import java.util.Scanner;
 
 public class Factorial {
-
+    
     public static void main(String[] args) throws IOException {
-        int choice = 0;
-        do {
-            System.out.println("Please choose an input method:");
-            System.out.println("1. Command line args");
-            System.out.println("2. Scanner");
-            System.out.println("3. BufferedReader");
-            System.out.println("4. DataInputStream");
-            System.out.println("5. Console");
-            System.out.println("6. Exit");
-
-            BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-            choice = Integer.parseInt(reader.readLine());
-
-            int number;
-            switch (choice) {
+        int number = 0;
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        DataInputStream dis = new DataInputStream(System.in);
+        Console console = System.console();
+        
+        if(args.length > 0) {
+            number = Integer.parseInt(args[0]);
+        } 
+        else {
+            System.out.println("Enter a number: ");
+            System.out.println("1. Using Scanner");
+            System.out.println("2. Using BufferedReader");
+            System.out.println("3. Using DataInputStream");
+            System.out.println("4. Using Console");
+            System.out.println("5. Using Command Line Args");
+            System.out.print("Enter your choice: ");
+            
+            int choice = Integer.parseInt(br.readLine());
+            
+            switch(choice) {
                 case 1:
-                    number = Integer.parseInt(args[0]);
-                    break;
-                case 2:
                     Scanner scanner = new Scanner(System.in);
-                    System.out.println("Please enter a number:");
+                    System.out.print("Enter a number: ");
                     number = scanner.nextInt();
                     break;
-                case 3:
-                    reader = new BufferedReader(new InputStreamReader(System.in));
-                    System.out.println("Please enter a number:");
-                    number = Integer.parseInt(reader.readLine());
+                    
+                case 2:
+                    System.out.print("Enter a number: ");
+                    number = Integer.parseInt(br.readLine());
                     break;
-                case 4:
-                    DataInputStream dis = new DataInputStream(System.in);
-                    System.out.println("Please enter a number:");
+                    
+                case 3:
+                    System.out.print("Enter a number: ");
                     number = Integer.parseInt(dis.readLine());
                     break;
-                case 5:
-                    Console console = System.console();
-                    if (console == null) {
-                        System.out.println("Console not available");
-                        continue;
-                    }
-                    System.out.println("Please enter a number:");
+                    
+                case 4:
+                    System.out.print("Enter a number: ");
                     number = Integer.parseInt(console.readLine());
                     break;
-                case 6:
-                    return;
+                    
+                case 5:
+                    if(args.length > 0) {
+                        number = Integer.parseInt(args[0]);
+                    } 
+                    else {
+                        System.out.println("No command line arguments found.");
+                    }
+                    break;
+                    
                 default:
-                    System.out.println("Invalid choice");
-                    continue;
+                    System.out.println("Invalid choice. Please try again.");
             }
-
-            long factorial = 1;
-            for (int i = 1; i <= number; i++) {
-                factorial *= i;
+        }
+        
+        if(number < 0) {
+            System.out.println("Factorial of negative number is not possible.");
+        } 
+        else {
+            int result = 1;
+            
+            for(int i = 1; i <= number; i++) {
+                result *= i;
             }
-
-            System.out.println("The factorial of " + number + " is " + factorial);
-
-        } while (choice != 6);
+            
+            System.out.println("Factorial of " + number + " is " + result);
+        }
     }
 }
+
